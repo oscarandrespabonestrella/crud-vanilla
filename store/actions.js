@@ -1,8 +1,16 @@
 export default {
-    addItem(context, payload) {
-        context.commit('addItem', payload);
+    requestUsers(context, payload) {
+        context.commit('requestUsers', payload);
     },
-    clearItem(context, payload) {
-        context.commit('clearItem', payload);
+    loadMoreUsers(context, payload) {
+        context.commit('loadMoreUsers', payload);
+    },
+    removeUser(context, payload) {
+        context.commit('removeUser', payload);
+    },
+    editUser(context, payload) {
+        context.commit('editUser', payload);
+
     }
+
 };

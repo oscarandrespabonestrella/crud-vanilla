@@ -1,74 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="./normalize.css">
-    <link rel="stylesheet" href="./styles.css">
+    <link rel="stylesheet" href="/styles/normalize.css">
+    <link rel="stylesheet" href="/styles/simple-grid.min.css">
+    <link rel="stylesheet" href="/styles/styles.css">
 </head>
+
 <body>
-    <div class="container">
-        <div class="row">
-            <div class="col">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Avatar</th>
-                            <th>Name</th>
-                            <th>Email</th>
-                            <th>Gender</th>
-                            <th>Phone</th>
-                            <th>Location</th>
-                        </tr>
-                    </thead>
-                    <tbody id="user_table">
-                        
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
+    <ul class="navbar-list">
+        <li class="navbar-item">
+            <a href="/" data-link>Home</a>
+        </li>
+        <li class="navbar-item">
+            <a href="/user/1" data-link>User</a>
+        </li>
+    </ul>
+    <div id="root"></div>
 
-    <script  type="module" src="http.system.js"></script>
-    <script type="module">
-        import HttpService from "./http.system.js"    
+    <script src="/app.js" type="module"></script>
 
-        const populateTable = function(users) {
-            console.log(users);
-            if(users.length){
-                let accumulate = "";                
-                for(let i = 0; i < users.length; i++){                    
-                    accumulate += `                    
-                    <tr>
-                        <td><img src="${users[i].picture.thumbnail}" alt="Avatar" /></td>
-                        <td>${users[i].name?.title} ${users[i].name?.last} ${users[i].name?.first}</td>
-                        <td> ${users[i].email} </td>
-                        <td> ${users[i].gender} </td>
-                        <td> ${users[i].phone} </td>
-                        <td> ${users[i].location?.city}, ${users[i].location?.state}, ${users[i].location?.country} </td>                    
-                    </tr>
-                    `;                    
-                }                
-                return accumulate;
-            }else {
-                return "<tr><td colspan='5'> No Results </td><tr>";
-            }
-        }
-
-        const httpService = new HttpService();        
-        const users = await httpService.get("https://randomuser.me/api/?results=10")
-
-        const table = document.getElementById("user_table");
-        const rows = populateTable(users.results);
-        
-        table.innerHTML = rows;
-
-        
-
-        
-    
-    </script>
 </body>
+
 </html>

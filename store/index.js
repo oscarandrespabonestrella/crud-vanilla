@@ -1,5 +1,5 @@
 import actions from './actions.js';
-import mutations from './mutations.js';
+import mutations from './mutation.js';
 import state from './state.js';
 import Store from './store.js';
 
