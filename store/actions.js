@@ -11,6 +11,16 @@ export default {
     editUser(context, payload) {
         context.commit('editUser', payload);
 
+    },
+    sortUsers(context, payload) {
+        context.commit('sortUsers', payload);
+
+    },
+
+    searchUser(context, payload) {
+        context.commit('searchUser', payload);
+
     }
+
 
 };

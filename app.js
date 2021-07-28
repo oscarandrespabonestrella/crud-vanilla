@@ -54,6 +54,7 @@ window.addEventListener("popstate", router);
 document.addEventListener("DOMContentLoaded", () => {
     document.body.addEventListener("click", e => {
         if (e.target.matches("[data-link]")) {
+            console.log(e);
             e.preventDefault();
             navigateTo(e.target.href);
         }

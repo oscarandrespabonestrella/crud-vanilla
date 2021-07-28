@@ -5,11 +5,8 @@ import store from '../store/index.js';
 export default class extends AbstractView {
     constructor(params) {
         super(params);
-        this.setTitle("User detail");
+        this.setTitle("User Crud - User detail");
         this.initUser(params.id);
-
-
-
     }
 
     userData = {};
@@ -29,9 +26,9 @@ export default class extends AbstractView {
         this.userData = store.state.users.find(x => x?.login?.uuid === id);
     }
     logSubmit(event) {
+        event.preventDefault();
         console.log(`Form Submitted! Time stamp: ${event.timeStamp}`);
         store.dispatch("editUser", this.userData);
-        event.preventDefault();
     }
     updateForm(event) {
         const mapper = event.currentTarget.name.split("-");
@@ -43,13 +40,20 @@ export default class extends AbstractView {
             }
         }
     }
+    goBack(e) {
+        e.preventDefault();
+        console.log('aquie')
+        window.history.go(-1);
+    }
 
     async getHtml() {
         const form = stringToHTML(`
+            <div class="container" style="margin-top: 2em;">                
+                
             <form class="user-form" id="user_form">
-                <div class="container">
+                <div class="container-form">
                     <div class="row">
-                        <div class="col">
+                        <div class="col-8">
                             <h2>Edit User: ${this.userData?.name?.last} ${this.userData?.name?.first}</h2>
                         </div>
                     </div>
@@ -106,13 +110,16 @@ export default class extends AbstractView {
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col">
-                            <button type="submit">Save</button>
-                            <button type="submit">Cancel</button>
+                        <div class="col-12-sm col-2">
+                            <button type="submit" class="btn w-100 btn-primary">Save</button>
+                        </div>
+                        <div class="col-12-sm col-2">
+                            <a href="/" class="btn w-100" data-link>Cancel</a>
                         </div>
                     </div>
-                </div>
-            </form>
+                    </div>
+                    </form>
+                    </div>
         `);
         form.querySelectorAll('[data-user-input]').forEach((input) => {
             input.addEventListener('keyup', this.updateForm.bind(this))
@@ -121,6 +128,8 @@ export default class extends AbstractView {
             input.addEventListener('change', this.updateForm.bind(this));
         });
         form.querySelector('form#user_form').addEventListener('submit', this.logSubmit);
+        // form.querySelector('[data-link-user]').addEventListener('click', this.goBack);
+
 
 
         return form;

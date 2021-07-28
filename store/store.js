@@ -22,7 +22,7 @@ export default class Store {
 
                 state[key] = value;
 
-                console.log(`stateChange: ${key}: ${value}`);
+                console.log(`stateChange: ${key}:`, value);
 
                 self.events.publish('stateChange', self.state);
                 localStorage.setItem("state", JSON.stringify(state));

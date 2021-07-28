@@ -7,7 +7,7 @@ import { stringToHTML } from "../lib/string-to-html.js";
 export default class extends AbstractView {
     constructor(params) {
         super(params);
-        this.setTitle("Home");
+        this.setTitle("User Crud - Home");
 
     }
 
@@ -25,6 +25,9 @@ export default class extends AbstractView {
         const users = await this.httpService.get("https://randomuser.me/api/?page=2&results=10")
         store.dispatch('loadMoreUsers', users.results);
     }
+    search = (event) => {
+        store.dispatch('searchUser', event.currentTarget.value);
+    }
 
     async getHtml() {
         await this.initData();
@@ -32,17 +35,23 @@ export default class extends AbstractView {
         const structure = stringToHTML(`
             <div class="container">
                 <div class="row">
-                    <div class="col" id="user_table">                    
+                    <div class="col-3 col-12-sm">
+                        <input name="search" placeholder="Search" type="text"  data-search/>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col">
-                        <button id="load_more">Load more</button>
+                    <div class="col col-12-sm" id="user_table">                    
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col col-12-sm">
+                        <button id="load_more" class="btn btn-primary">Load more</button>
                     </div>
                 </div>
             </div>
         `)
         structure.querySelector("#load_more").addEventListener('click', this.loadMore);
+        structure.querySelector("[data-search]").addEventListener('keyup', this.search);
         structure.querySelector("#user_table").appendChild(this.divTable);
         return structure;
     }
